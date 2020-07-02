@@ -1,0 +1,16 @@
+query ListTodos(
+  $filter: ModelTodoFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      completed
+      text
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
