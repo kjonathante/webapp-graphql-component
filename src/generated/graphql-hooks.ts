@@ -204,6 +204,20 @@ export type UpdateTodoInput = {
   text?: Maybe<Scalars['String']>;
 };
 
+export type CreateTodoMutationVariables = Exact<{
+  input: CreateTodoInput;
+  condition?: Maybe<ModelTodoConditionInput>;
+}>;
+
+
+export type CreateTodoMutation = (
+  { __typename?: 'Mutation' }
+  & { createTodo?: Maybe<(
+    { __typename?: 'Todo' }
+    & Pick<Todo, 'id' | 'completed' | 'text' | 'createdAt' | 'updatedAt'>
+  )> }
+);
+
 export type ListTodosQueryVariables = Exact<{
   filter?: Maybe<ModelTodoFilterInput>;
   limit?: Maybe<Scalars['Int']>;
@@ -224,6 +238,43 @@ export type ListTodosQuery = (
 );
 
 
+export const CreateTodoDocument = gql`
+    mutation CreateTodo($input: CreateTodoInput!, $condition: ModelTodoConditionInput) {
+  createTodo(input: $input, condition: $condition) {
+    id
+    completed
+    text
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export type CreateTodoMutationFn = ApolloReactCommon.MutationFunction<CreateTodoMutation, CreateTodoMutationVariables>;
+
+/**
+ * __useCreateTodoMutation__
+ *
+ * To run a mutation, you first call `useCreateTodoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTodoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTodoMutation, { data, loading, error }] = useCreateTodoMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      condition: // value for 'condition'
+ *   },
+ * });
+ */
+export function useCreateTodoMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateTodoMutation, CreateTodoMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateTodoMutation, CreateTodoMutationVariables>(CreateTodoDocument, baseOptions);
+      }
+export type CreateTodoMutationHookResult = ReturnType<typeof useCreateTodoMutation>;
+export type CreateTodoMutationResult = ApolloReactCommon.MutationResult<CreateTodoMutation>;
+export type CreateTodoMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateTodoMutation, CreateTodoMutationVariables>;
 export const ListTodosDocument = gql`
     query ListTodos($filter: ModelTodoFilterInput, $limit: Int, $nextToken: String) {
   listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {

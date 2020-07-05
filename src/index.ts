@@ -20,3 +20,4 @@ export const apolloClient = ({ uri, apiKey }: Options) => {
 }
 
 export * from './generated/graphql-hooks'
+export * from './options/createTodoMutationOptions'

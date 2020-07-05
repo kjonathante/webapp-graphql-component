@@ -1,0 +1,12 @@
+mutation CreateTodo(
+  $input: CreateTodoInput!
+  $condition: ModelTodoConditionInput
+) {
+  createTodo(input: $input, condition: $condition) {
+    id
+    completed
+    text
+    createdAt
+    updatedAt
+  }
+}
